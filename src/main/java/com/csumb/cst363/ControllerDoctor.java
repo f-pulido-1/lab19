@@ -58,7 +58,7 @@ public class ControllerDoctor {
 			return "doctor_show";
 			
 		} catch (SQLException e) {
-			model.addAttribute("message", "SQL Error."+e.getMessage());
+			model.addAttribute("message", "SQL Error. " + e.getMessage());
 			model.addAttribute("doctor", doctor);
 			return "doctor_register";	
 		}
@@ -84,7 +84,7 @@ public class ControllerDoctor {
 		
 		try (Connection con = getConnection();) {
 			
-			PreparedStatement ps = con.prepareStatement("select last_name, first_name, specialty, practice_since from doctor where id=? and last_name=?");
+			PreparedStatement ps = con.prepareStatement("select last_name, first_name, specialty, practice_since from doctor where doctor_id=? and last_name=?");
 			ps.setInt(1, doctor.getId());
 			ps.setString(2, doctor.getLast_name());
 			
@@ -124,7 +124,7 @@ public class ControllerDoctor {
 		doctor.setId(id);
 		try (Connection con = getConnection();) {
 
-			PreparedStatement ps = con.prepareStatement("select last_name, first_name, specialty, practice_since from doctor where id=?");
+			PreparedStatement ps = con.prepareStatement("select last_name, first_name, specialty, practice_since from doctor where doctor_id=?");
 			ps.setInt(1,  id);
 			
 			ResultSet rs = ps.executeQuery();
@@ -157,7 +157,7 @@ public class ControllerDoctor {
 		System.out.println("updateDoctor " + doctor);
 		try (Connection con = getConnection();) {
 
-			PreparedStatement ps = con.prepareStatement("update doctor set specialty=?, practice_since=? where id=?");
+			PreparedStatement ps = con.prepareStatement("update doctor set specialty=?, practice_since=? where doctor_id=?");
 			ps.setString(1, doctor.getSpecialty());
 			ps.setString(2, doctor.getPractice_since_year());
 			ps.setInt(3, doctor.getId());
